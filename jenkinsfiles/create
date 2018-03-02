@@ -1,5 +1,8 @@
 pipeline {
     agent {
+        any {
+         sh '/opt/scripts/dockerchek.sh'
+        }
       docker {
         image "hashicorp/terraform:latest"
         args "-v '/var/lib/jenkins/.ssh/id_rsa:/.ssh/id_rsa'"
