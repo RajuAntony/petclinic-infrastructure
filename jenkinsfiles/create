@@ -4,7 +4,7 @@ pipeline {
         stage ('docker-install') {
          agent any 
           steps {
-                sh '/opt/scripts/dockerchek.sh'
+                sh '/opt/scripts/dockercheck.sh'
             }      
         }
         stage('terraform-lint') {
