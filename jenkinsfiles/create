@@ -1,15 +1,19 @@
 pipeline {
-    agent {
-        any {
-         sh '/opt/scripts/dockerchek.sh'
-        }
-      docker {
-        image "hashicorp/terraform:latest"
-        args "-v '/var/lib/jenkins/.ssh/id_rsa:/.ssh/id_rsa'"
-      }
-    }
+    agent none 
     stages {
+        stage ('docker-install') {
+         agent any 
+          steps {
+                sh '/opt/scripts/dockerchek.sh'
+            }      
+        }
         stage('terraform-lint') {
+           agent  {
+                docker {
+                    image "hashicorp/terraform:latest"
+                    args "-v '/var/lib/jenkins/.ssh/id_rsa:/.ssh/id_rsa'"
+                }
+           }
             steps {
                 withCredentials([[
                     $class: "AmazonWebServicesCredentialsBinding",
